@@ -63,3 +63,21 @@ console.log(javaKnown);
 
 
 //customized 
+
+//  Array.prototype.customMap = function(compare){
+//         let arr = [];
+//         for(let num of this){
+//             arr.push(compare(num))
+//         }
+//         return arr;
+// }
+// const abhishek = students.customMap((student)=>student.id>1);
+// console.log(abhishek);
+
+const nums = [1,2,3,4];
+
+const sum = nums.reduce((acc, curr) => {
+    return acc + curr;
+}, 0);
+
+console.log(sum);
