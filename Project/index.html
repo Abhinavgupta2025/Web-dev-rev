@@ -3,19 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My task Manager</title>
+    <title>CodeForge AI</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<body>  
-    <h1>Revision</h1>
-    <div class="Task">
-        <div class="addTask">
-            <input type="text" class="input">
-            <button class="addButton">Add task</button>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>Your personal space</h2>
         </div>
-    </div>
-    <div id="allTasks">
-    </div>
-   <script src="script.js"></script>
+
+        <nav class="nav-links">
+
+            <button class="nav-item active">
+                📋 Task Manager
+            </button>
+
+            <button class="nav-item">
+                📚 DSA Tracker
+            </button>
+
+            <button class="nav-item">
+                ⏱ Pomodoro
+            </button>
+
+            <button class="nav-item">
+                📝 Notes
+            </button>
+
+            <button class="nav-item">
+                🌐 GitHub Search
+            </button>
+
+            <button class="nav-item">
+                📊 Analytics
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>Task Manager</h1>
+                <p>
+                    Sorted by priority. Stay on top of what matters.
+                </p>
+            </div>
+
+            <div class="stats-row">
+
+                <div class="stat">
+                    <div class="stat-label">Total</div>
+                    <div class="stat-val" id="s-total">0</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-val" id="s-pending">0</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">Done</div>
+                    <div class="stat-val" id="s-done">0</div>
+                </div>
+
+            </div>
+
+            <div class="input-card">
+
+                <div class="input-row">
+
+                    <input 
+                        id="taskInput"
+                        class="task-input"
+                        placeholder="What needs doing?"
+                        autocomplete="off"
+                    />
+
+                    <select id="prioritySelect" class="priority-select">
+
+                        <option value="3">
+                            High priority
+                        </option>
+
+                        <option value="2">
+                            Medium priority
+                        </option>
+
+                        <option value="1">
+                            Low priority
+                        </option>
+
+                    </select>
+
+                    <button 
+                        id="addTaskBtn"
+                        class="add-btn"
+                    >
+                        + Add
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="section-label">
+                In progress
+            </div>
+
+            <div id="pendingTasks" class="task-list"></div>
+
+            <div class="section-label">
+                Completed
+            </div>
+
+            <div id="completedTasks" class="task-list"></div>
+
+            <div id="emptyState" class="empty-state">
+                No tasks yet. Add one above.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>

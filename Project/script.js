@@ -1,85 +1,119 @@
-const addButton = document.querySelector(".addButton");
-const input = document.querySelector(".input");
-const task = document.querySelector(".task");
-const allTasks = document.querySelector("#allTasks");
+const addTaskBtn = document.querySelector("#addTaskBtn");
+const taskInput = document.querySelector("#taskInput");
+const prioritySelect = document.querySelector("#prioritySelect");
+const pendingTasks = document.querySelector("#pendingTasks");
+const completedTasks = document.querySelector("#completedTasks");
+const emptyState = document.querySelector("#emptyState");
+
+const sTotal = document.querySelector("#s-total");
+const sPending = document.querySelector("#s-pending");
+const sDone = document.querySelector("#s-done");
+
 let arr = [];
 
-function renderTask(){
-       allTasks.innerHTML = "";
-       arr.forEach((element,index)=>{
-        if(element.status !== "done"){
+function renderTask() {
+    pendingTasks.innerHTML = "";
+    completedTasks.innerHTML = "";
+    
+    arr.sort((a, b) => b.priority - a.priority);
+
+    let pendingCount = 0;
+    let doneCount = 0;
+
+    arr.forEach((element) => {
         const div = document.createElement("div");
-        div.innerHTML = `
-        <p>task ${index +1} : ${element.task}</p>
-        <button class="done" id="${element.id}">Done</button>
-        <button class="edit" id="${element.id}">edit</button>
-        <button class="delete" id="${element.id}">delete</button>
-        `;
-        allTasks.appendChild(div);
-    }
-    else{
-        const div = document.createElement("div");
-        div.classList.add("completed");
-        div.innerHTML = `
-        <p>task ${index +1} : ${element.task}</p>
-        `;
-        allTasks.appendChild(div);
-    }
-       })
-};
-addButton.addEventListener("click",()=>{
-    if(input.value.trim().length !==0){
-        const obj = {
-            id : Date.now(),
-            task: input.value.trim(),
-            status : "pending"
+        div.className = element.status === "done" ? "task-card done-card" : "task-card";
+
+        // Priority classes
+        let pDotClass = "p-low";
+        let pBadgeClass = "badge-low";
+        let pLabel = "Low";
+        
+        if (element.priority === "3") {
+            pDotClass = "p-high";
+            pBadgeClass = "badge-high";
+            pLabel = "High";
+        } else if (element.priority === "2") {
+            pDotClass = "p-med";
+            pBadgeClass = "badge-med";
+            pLabel = "Medium";
         }
+
+        const textClass = element.status === "done" ? "task-text striked" : "task-text";
+
+        div.innerHTML = `
+            <div class="priority-dot ${pDotClass}"></div>
+            <div class="${textClass}">${element.task}</div>
+            <div class="priority-badge ${pBadgeClass}">${pLabel}</div>
+            <div class="task-actions">
+                ${element.status !== "done" ? `<button class="act-btn done-btn" id="${element.id}">✓</button>` : ""}
+                <button class="act-btn edit" id="${element.id}">✎</button>
+                <button class="act-btn del" id="${element.id}">✕</button>
+            </div>
+        `;
+
+        if (element.status !== "done") {
+            pendingTasks.appendChild(div);
+            pendingCount++;
+        } else {
+            completedTasks.appendChild(div);
+            doneCount++;
+        }
+    });
+
+    sTotal.textContent = arr.length;
+    sPending.textContent = pendingCount;
+    sDone.textContent = doneCount;
+
+    if (arr.length === 0) {
+        emptyState.style.display = "block";
+    } else {
+        emptyState.style.display = "none";
+    }
+}
+
+addTaskBtn.addEventListener("click", () => {
+    if (taskInput.value.trim().length !== 0) {
+        const obj = {
+            id: Date.now(),
+            task: taskInput.value.trim(),
+            status: "pending",
+            priority: prioritySelect.value,
+        };
         arr.push(obj);
         renderTask();
-        input.value = "";
+        taskInput.value = "";
     }
 });
 
-allTasks.addEventListener("click",(event)=>{
-
+document.body.addEventListener("click", (event) => {
     const target = event.target;
-
-    const id = Number(target.id);
-
-    const index = arr.findIndex((task) => {
-        return task.id === id;
-    });
-
     
-    if(target.classList.contains("delete")){
+    // Check if it's an action button
+    if (target.classList.contains("act-btn")) {
+        const id = Number(target.id);
+        const index = arr.findIndex((task) => task.id === id);
+        
+        if (index === -1) return;
 
-        arr.splice(index,1);
+        if (target.classList.contains("del")) {
+            arr.splice(index, 1);
+            renderTask();
+        }
 
-        renderTask();
-    }
+        if (target.classList.contains("edit")) {
+            const newTask = prompt("Update Task : ", arr[index].task);
+            if (newTask && newTask.trim()) {
+                arr[index].task = newTask.trim();
+                renderTask();
+            }
+        }
 
-
-    if(target.classList.contains("edit")){
-
-        const newTask = prompt(
-            "Update Task : ",
-            arr[index].task
-        );
-
-        if(newTask && newTask.trim()){
-
-            arr[index].task = newTask.trim();
-
+        if (target.classList.contains("done-btn")) {
+            arr[index].status = "done";
             renderTask();
         }
     }
-
-
-    if(target.classList.contains("done")){
-
-        arr[index].status = "done";
-
-        renderTask();
-    }
-
 });
+
+renderTask();
