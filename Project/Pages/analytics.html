@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - CodeForge AI</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>Your personal space</h2>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-item" onclick="window.location.href='index.html'">📋 Task Manager</button>
+            <button class="nav-item" onclick="window.location.href='dsa-track.html'">📚 DSA Tracker</button>
+            <button class="nav-item" onclick="window.location.href='pomodoro.html'">⏱ Pomodoro</button>
+            <button class="nav-item" onclick="window.location.href='notes.html'">📝 Notes</button>
+            <button class="nav-item" onclick="window.location.href='github.html'">🌐 GitHub Search</button>
+            <button class="nav-item active">📊 Analytics</button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>Analytics Dashboard</h1>
+                <p>Aggregate your data using localStorage and dynamically generate charts.</p>
+            </div>
+
+            <!-- Aggregated Stats Row -->
+            <!-- Challenge: Pull arrays from localStorage (tasks, notes) and count them! -->
+            <div class="stats-row" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="stat">
+                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-val" id="totalTasksStat">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Total Notes</div>
+                    <div class="stat-val" id="totalNotesStat">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">DSA Questions</div>
+                    <div class="stat-val" id="totalDsaStat">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Focus Score</div>
+                    <div class="stat-val" id="focusScoreStat">0</div>
+                </div>
+            </div>
+
+            <!-- Custom Bar Chart Challenge -->
+            <div class="chart-card">
+                <div class="chart-title">Weekly Productivity (Mock Data)</div>
+                
+                <!-- Challenge: Use JS to loop through an array of data, create these columns dynamically, 
+                     and calculate the inline style height percentage! -->
+                <div class="bar-chart" id="barChartContainer">
+                    
+                    <!-- Example of what JS should inject: -->
+                    <div class="chart-column">
+                        <div class="bar-wrapper">
+                            <!-- JS should set style="height: X%" and data-value="X" -->
+                            <div class="bar-fill" style="height: 0%;" data-value="0"></div>
+                        </div>
+                        <span class="chart-label">Mon</span>
+                    </div>
+
+                    <div class="chart-column">
+                        <div class="bar-wrapper">
+                            <div class="bar-fill" style="height: 0%;" data-value="0"></div>
+                        </div>
+                        <span class="chart-label">Tue</span>
+                    </div>
+
+                    <div class="chart-column">
+                        <div class="bar-wrapper">
+                            <div class="bar-fill" style="height: 0%;" data-value="0"></div>
+                        </div>
+                        <span class="chart-label">Wed</span>
+                    </div>
+
+                    <div class="chart-column">
+                        <div class="bar-wrapper">
+                            <div class="bar-fill" style="height: 0%;" data-value="0"></div>
+                        </div>
+                        <span class="chart-label">Thu</span>
+                    </div>
+
+                    <div class="chart-column">
+                        <div class="bar-wrapper">
+                            <div class="bar-fill" style="height: 0%;" data-value="0"></div>
+                        </div>
+                        <span class="chart-label">Fri</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../Modules/analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Search - CodeForge AI</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>Your personal space</h2>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-item" onclick="window.location.href='index.html'">📋 Task Manager</button>
+            <button class="nav-item" onclick="window.location.href='dsa-track.html'">📚 DSA Tracker</button>
+            <button class="nav-item" onclick="window.location.href='pomodoro.html'">⏱ Pomodoro</button>
+            <button class="nav-item" onclick="window.location.href='notes.html'">📝 Notes</button>
+            <button class="nav-item active">🌐 GitHub Search</button>
+            <button class="nav-item" onclick="window.location.href='analytics.html'">📊 Analytics</button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>GitHub Profile Search</h1>
+                <p>Fetch real-time data from the GitHub API using async/await and Promises.</p>
+            </div>
+
+            <!-- Search Area -->
+            <!-- Challenge: Add an event listener to the button (and maybe the 'Enter' key on the input) -->
+            <div class="github-search-card">
+                <div style="display: flex; gap: 12px; align-items: center; width: 100%;">
+                    <input 
+                        type="text" 
+                        id="githubSearchInput" 
+                        class="task-input" 
+                        placeholder="Enter a GitHub username (e.g., torvalds)"
+                        autocomplete="off"
+                        style="background: #18181b; padding: 12px 16px; border-radius: 8px; border: 1px solid #3f3f46;"
+                    />
+                    <button id="githubSearchBtn" class="add-btn" style="padding: 12px 24px;">Search</button>
+                </div>
+            </div>
+
+            <!-- Error message container -->
+            <!-- Challenge: Display this if response.ok is false! -->
+            <div id="githubError" class="github-error">User not found. Please try another username.</div>
+
+            <!-- Initial Empty State -->
+            <div id="githubEmpty" class="empty-state">Search for a developer to see their profile.</div>
+
+            <!-- Profile Card -->
+            <!-- Challenge: Hide githubEmpty and display this when a fetch is successful! -->
+            <div id="githubProfileCard" class="github-profile-card">
+                
+                <img id="ghAvatar" src="" alt="Avatar" class="github-avatar" />
+                
+                <div>
+                    <div id="ghName" class="github-name">Name</div>
+                    <!-- Challenge: Set the href dynamically so it opens their real profile -->
+                    <a id="ghLogin" href="#" target="_blank" class="github-login">@username</a>
+                </div>
+
+                <div id="ghBio" class="github-bio">This is where the user bio will be displayed.</div>
+
+                <div class="github-stats">
+                    <div class="g-stat">
+                        <div id="ghRepos" class="g-stat-val">0</div>
+                        <div class="g-stat-label">Repos</div>
+                    </div>
+                    <div class="g-stat">
+                        <div id="ghFollowers" class="g-stat-val">0</div>
+                        <div class="g-stat-label">Followers</div>
+                    </div>
+                    <div class="g-stat">
+                        <div id="ghFollowing" class="g-stat-val">0</div>
+                        <div class="g-stat-label">Following</div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../Modules/github.js"></script>
+</body>
+</html>

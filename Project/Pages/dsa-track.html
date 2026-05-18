@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Tracker - CodeForge AI</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>Your personal space</h2>
+        </div>
+
+        <nav class="nav-links">
+            <button class="nav-item" onclick="window.location.href='index.html'">
+                📋 Task Manager
+            </button>
+
+            <button class="nav-item active" id="dsa-tracker-button">
+                📚 DSA Tracker
+            </button>
+
+            <button class="nav-item" onclick="window.location.href='pomodoro.html'">
+                ⏱ Pomodoro
+            </button>
+
+            <button class="nav-item" onclick="window.location.href='notes.html'">
+                📝 Notes
+            </button>
+
+            <button class="nav-item" onclick="window.location.href='github.html'">
+                🌐 GitHub Search
+            </button>
+
+            <button class="nav-item" onclick="window.location.href='analytics.html'">
+                📊 Analytics
+            </button>
+        </nav>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>DSA Tracker</h1>
+                <p>Track your daily progress and master Data Structures & Algorithms.</p>
+            </div>
+
+            <!-- Stats Container -->
+            <div class="stats-row" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="stat">
+                    <div class="stat-label">Total Questions Solved</div>
+                    <!-- JavaScript will target this ID -->
+                    <div class="stat-val" id="totalQuestionsSolved">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Study Streak</div>
+                    <div class="stat-val" id="studyStreak">🔥 0 Days</div>
+                </div>
+            </div>
+
+            <!-- Input area for adding solved questions -->
+            <div class="input-card">
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <input 
+                        type="number"
+                        id="questionSolved"
+                        class="task-input"
+                        placeholder="How many questions solved?"
+                        autocomplete="off"
+                        style="background: #18181b; padding: 12px 16px; border-radius: 8px; border: 1px solid #3f3f46;"
+                    />
+                    
+                    <select id="topicSelect" class="priority-select" style="background: #18181b; padding: 12px 36px 12px 16px; border: 1px solid #3f3f46; border-radius: 8px;">
+                        <option value="Arrays">Arrays</option>
+                        <option value="Trees">Trees</option>
+                        <option value="Graphs">Graphs</option>
+                        <option value="DP">Dynamic Programming</option>
+                    </select>
+
+                    <button id="addQuestionBtn" class="add-btn" style="padding: 12px 24px;">+ Add</button>
+                </div>
+            </div>
+
+            <div class="section-label">Topic Progress</div>
+            
+            <div class="progress-container">
+                <!-- Arrays -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span>Arrays</span>
+                        <span id="arraysProgressText">0 / 50</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="arraysProgressBar" style="width: 0%; background: #3b82f6;"></div>
+                    </div>
+                </div>
+                <!-- Trees -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span>Trees</span>
+                        <span id="treesProgressText">0 / 50</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="treesProgressBar" style="width: 0%; background: #10b981;"></div>
+                    </div>
+                </div>
+                <!-- Graphs -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span>Graphs</span>
+                        <span id="graphsProgressText">0 / 50</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="graphsProgressBar" style="width: 0%; background: #f59e0b;"></div>
+                    </div>
+                </div>
+                <!-- DP -->
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <span>Dynamic Programming</span>
+                        <span id="dpProgressText">0 / 50</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="dpProgressBar" style="width: 0%; background: #ef4444;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<script src="../Modules/dsa-tracker.js"></script>
+</body>
+</html>

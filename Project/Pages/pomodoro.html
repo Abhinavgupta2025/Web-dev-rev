@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer - CodeForge AI</title>
+    <link rel="stylesheet" href="index.css">
+    
+    <!-- Pomodoro Specific Styling -->
+    <style>
+        .pomodoro-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            background: #18181b;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            border: 1px solid #3f3f46;
+            transition: background-color 0.5s ease;
+        }
+
+        .session-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 3.5rem;
+            background: #27272a;
+            padding: 8px;
+            border-radius: 20px;
+        }
+
+        .session-tab {
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            padding: 8px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .session-tab.active {
+            background: #3f3f46;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* SVG Circular Timer */
+        .timer-display {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .timer-circle {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .timer-circle circle {
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+        }
+
+        .timer-circle .bg {
+            stroke: #27272a;
+        }
+
+        /* The JS Challenge: Manipulating stroke-dashoffset */
+        .timer-circle .progress {
+            /* 
+               Circumference formula: C = 2 * Math.PI * r
+               Radius (r) is 130 in this SVG. 
+               2 * Math.PI * 130 = 816.81
+            */
+            stroke-dasharray: 816.81;
+            stroke-dashoffset: 0; 
+            transition: stroke-dashoffset 1s linear, stroke 0.3s;
+        }
+
+        .time-left {
+            font-size: 72px;
+            font-weight: 700;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+        }
+
+        .control-btn {
+            padding: 16px 40px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .start-btn {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .start-btn:hover {
+            background: #e4e4e7;
+        }
+
+        .reset-btn {
+            background: #27272a;
+            color: #ffffff;
+            border: 1px solid #3f3f46;
+        }
+        
+        .reset-btn:hover {
+            background: #3f3f46;
+        }
+        
+        /* State Colors */
+        /* You will need to toggle these classes on the pomodoro-container via JS */
+        .mode-focus .progress { stroke: #ef4444; } /* Red for Focus */
+        .mode-short-break .progress { stroke: #3b82f6; } /* Blue for Short Break */
+        .mode-long-break .progress { stroke: #10b981; } /* Green for Long Break */
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>Your personal space</h2>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-item" onclick="window.location.href='index.html'">
+                📋 Task Manager
+            </button>
+            <button class="nav-item" onclick="window.location.href='dsa-track.html'">
+                📚 DSA Tracker
+            </button>
+            <button class="nav-item active">
+                ⏱ Pomodoro
+            </button>
+            <button class="nav-item" onclick="window.location.href='notes.html'">📝 Notes</button>
+            <button class="nav-item" onclick="window.location.href='github.html'">🌐 GitHub Search</button>
+            <button class="nav-item" onclick="window.location.href='analytics.html'">📊 Analytics</button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>Pomodoro Timer</h1>
+                <p>Stay focused, manage your time, and track your sessions.</p>
+            </div>
+
+            <!-- Stats for Pomodoro -->
+            <div class="stats-row" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="stat">
+                    <div class="stat-label">Focus Sessions Completed</div>
+                    <div class="stat-val" id="sessionsCompleted">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Total Focus Time (Minutes)</div>
+                    <div class="stat-val" id="totalFocusTime">0</div>
+                </div>
+            </div>
+
+            <!-- Pomodoro UI Container -->
+            <!-- Challenge: JS needs to change the data-mode and classes here -->
+            <div class="pomodoro-container mode-focus" id="pomodoroContainer">
+                
+                <!-- Session Tabs -->
+                <!-- Challenge: Use event delegation and data attributes! -->
+                <div class="session-tabs" id="sessionTabs">
+                    <button class="session-tab active" data-mode="focus" data-time="25">Focus</button>
+                    <button class="session-tab" data-mode="short-break" data-time="5">Short Break</button>
+                    <button class="session-tab" data-mode="long-break" data-time="15">Long Break</button>
+                </div>
+
+                <!-- Timer Display -->
+                <!-- Challenge: JS interval needs to format time as MM:SS and calculate circle dash offset -->
+                <div class="timer-display">
+                    <svg class="timer-circle" viewBox="0 0 280 280">
+                        <circle class="bg" cx="140" cy="140" r="130"></circle>
+                        <circle class="progress" id="progressRing" cx="140" cy="140" r="130"></circle>
+                    </svg>
+                    <div class="time-left" id="timeLeft">25:00</div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <button id="startPauseBtn" class="control-btn start-btn">Start</button>
+                    <button id="resetBtn" class="control-btn reset-btn">Reset</button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<script src="../Modules/pomodoro.js"></script>
+</body>
+</html>

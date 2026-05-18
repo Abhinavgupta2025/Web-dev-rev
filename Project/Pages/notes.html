@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - CodeForge AI</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>Your personal space</h2>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-item" onclick="window.location.href='index.html'">📋 Task Manager</button>
+            <button class="nav-item" onclick="window.location.href='dsa-track.html'">📚 DSA Tracker</button>
+            <button class="nav-item" onclick="window.location.href='pomodoro.html'">⏱ Pomodoro</button>
+            <button class="nav-item active">📝 Notes</button>
+            <button class="nav-item" onclick="window.location.href='github.html'">🌐 GitHub Search</button>
+            <button class="nav-item" onclick="window.location.href='analytics.html'">📊 Analytics</button>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <div class="app-wrapper">
+
+            <div class="app-header">
+                <h1>Notes</h1>
+                <p>Jot down your thoughts, code snippets, and ideas.</p>
+            </div>
+
+            <div class="notes-container">
+                
+                <!-- Input Card -->
+                <div class="note-input-card">
+                    <!-- Challenge: Read values from these inputs -->
+                    <input type="text" id="noteTitle" class="note-title-input" placeholder="Note Title" autocomplete="off" />
+                   <textarea id="noteBody" class="note-body-input" placeholder="Take a note..."></textarea>
+                    
+                    <div class="note-actions">
+                        <!-- Challenge: Handle color selection logic using classList and dataset! -->
+                        <div class="color-picker" id="colorPicker">
+                            <button class="color-btn color-default selected" data-color="#27272a"></button>
+                            <button class="color-btn color-red" data-color="#7f1d1d"></button>
+                            <button class="color-btn color-blue" data-color="#1e3a8a"></button>
+                            <button class="color-btn color-green" data-color="#14532d"></button>
+                            <button class="color-btn color-purple" data-color="#581c87"></button>
+                        </div>
+                        <button id="saveNoteBtn" class="save-btn">Save Note</button>
+                    </div>
+                </div>
+
+                <!-- Notes Grid Container -->
+                <!-- Challenge: Retrieve array of notes from localStorage and render them here -->
+                <div class="notes-grid" id="notesGrid">
+                    <!-- Example Note (Your JS should generate HTML like this dynamically) -->
+                    <div class="note-card" style="background-color: #1e3a8a;">
+                        <div class="note-title">Example Note</div>
+                        <div class="note-body">This is an example note. Delete it and add your own using JavaScript!</div>
+                        <div class="note-date">May 17, 2026</div>
+                        <!-- Use data attributes (like data-id) on the delete button to know which note to remove -->
+                        <button class="delete-note-btn">✕</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script src="../Modules/notes.js"></script>
+</body>
+</html>
